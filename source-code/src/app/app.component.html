@@ -1,0 +1,177 @@
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <!-- Container -->
+  <div class="container-md">
+    <!-- Title -->
+    <a class="navbar-brand" href="#">Banking Assignment </a>
+    <!-- Content -->
+    <div class="d-flex flex-reverse-row gap-5">
+      <!-- Balance container -->
+      <div class="d-flex flex-row align-items-center gap-2">
+        <!-- Icon -->
+        <i class="bi bi-safe fs-4"></i>
+        <!-- Balance -->
+        <p class="mb-0">{{customer?.balance | currency : "EUR" : "symbol"}}</p>
+      </div>
+      <!-- Account container -->
+      <div class="d-flex flex-row align-items-center gap-2">
+        <!-- Icon -->
+        <i class="bi bi-person-circle fs-4"></i>
+        <!-- Username -->
+        <p class="mb-0">{{customer?.name + " " + customer?.surname}}</p>
+      </div>
+    </div>
+  </div>
+</nav>
+@if(validatonErrorMessage){
+<div class="px-4 pt-4 pb-2">
+  <div class="alert alert-danger fw-bold" role="alert">{{
+    validatonErrorMessage
+    }}
+  </div>
+</div>
+}
+
+<!-- Container -->
+<div class="container col-xxl-8 px-4 py-5">
+  <!-- Row -->
+  <div class="row flex-lg-row-reverse g-5 py-5">
+    <!-- Col -->
+    <div class="col-lg-5">
+      <!-- Card -->
+      <div class="p-4 border rounded-5">
+        <!-- Card header -->
+        <h5 class="border-bottom pb-2 mb-4 lh-1">Transactions</h5>
+        <!-- Column -->
+        <div
+          class="d-flex flex-column px-2 gap-2"
+          style="max-height: 60vh; overflow-y: scroll"
+        >
+        @if(!!customer &&  customer.transactions.length > 0)
+        {
+           @for (transaction of customer.transactions; track $index) {
+          <!-- Row -->
+          <div class="d-flex flex-row align-items-center gap-2">
+            <!-- Icons container -->
+            <div
+              class="d-flex flex-row align-items-center text-{{
+                transaction.type === 'DEPOSIT' ? 'success' : 'danger'
+              }}"
+            >
+              <!-- Icon -->
+              <i class="bi bi-wallet2 fs-4"></i>
+              <!-- Icon -->
+              <i
+                class="bi bi-arrow-{{
+                  transaction.type === 'DEPOSIT' ? 'left' : 'right'
+                }}-short fs-4"
+              ></i>
+            </div>
+            <p class="mb-0">
+              Account: {{transaction.accountId}}
+            </p>
+            <!-- Date -->
+            <p class="mb-0 ms-2 text-muted">{{ transaction.timeStamp | date:"medium"    }}</p>
+            <!-- Amount -->
+            <div class="d-flex flex-row align-items-center ms-auto px-2">
+              @if (transaction.type === 'DEPOSIT') {
+              <i class="bi bi-plus text-success fs-4"></i>
+              }@else {
+              <i class="bi bi-dash text-danger fs-4"></i>
+              }
+              {{ transaction.amount | currency : "EUR" : "symbol" }}
+            </div>
+          </div>
+          }
+        }
+        @else {
+          <h4>
+            No transactions
+          </h4>
+        }
+        </div>
+      </div>
+    </div>
+    <!-- Col -->
+    <div class="col-lg-7 bg-body-tertiary rounded-3 p-4">
+      <!-- Title -->
+      <!-- <h4 class="text-body-emphasis lh-1 mb-3">Accounts</h4> -->
+      <!-- Todo -->
+      <div class="d-flex flex-row gap-2">
+        <!-- Input group -->
+        <div class="input-group mb-3">
+          <span class="input-group-text">Initial Credit</span>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Initial Credit"
+            [(ngModel)]="initialCredit"
+          />
+          <span class="input-group-text">€</span>
+        </div>
+        <div class="flex-shrink-0">
+          <button type="button" class="btn btn-outline-primary" (click)="createAccount()">
+            New Account
+          </button>
+        </div>
+      </div>
+      <div class="d-flex flex-row gap-2">
+        <!-- Input group -->
+        <div class="input-group mb-3">
+          <span class="input-group-text">Account</span>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Account"
+            [(ngModel)]="transactionRequest.accountId"
+          />
+        </div>
+        <div class="input-group mb-3">
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Amount"
+            [(ngModel)]="transactionRequest.amount"
+          />
+          <span class="input-group-text">€</span>
+        </div>
+        <div class="input-group mb-3">
+          <select class="form-select" [(ngModel)]="transactionRequest.type" >
+            <option value="DEPOSIT">DEPOSIT</option>
+            <option value="WITHDRAWAL">WITHDRAWAL</option>
+          </select>
+        </div>
+        <div class="flex-shrink-0">
+          <button type="button" class="btn btn-outline-{{transactionRequest.type === 'DEPOSIT' ? 'success' : 'warning'}}" (click)="createTransaction()">
+            New Transaction
+          </button>
+        </div>
+      </div>
+        <div
+          class="d-flex flex-column px-2 gap-2 mt-2"
+          style="max-height: 60vh; overflow-y: auto"
+        >
+        @if(userAccounts.length > 0)
+        {
+          <h5 class="border-bottom pb-2 mb-4 lh-1">Your accounts</h5>
+          @for (userAccount of userAccounts; track $index) {
+          <!-- Row -->
+          <div class="d-flex flex-row align-items-center gap-2">
+            <i class="bi bi-piggy-bank-fill fs-4" style="color: rgb(233, 182, 190);"></i>
+            <p class="mb-0">
+              {{userAccount.id}}
+            </p>
+          </div>
+          }
+        }
+        @else {
+          <h4>
+            No transactions
+          </h4>
+        }
+        </div>
+      </div>
+    </div>
+   
+  </div>
+
