@@ -27,7 +27,6 @@ export class AppComponent implements OnInit {
   public customer?: Customer
   public initialCredit: number = 0
   public validatonErrorMessage?: string | null
-  public customerAccounts: Account[] = []
   public transactionRequest: Transaction ={
     accountId: 0,
     amount:0,
@@ -56,14 +55,6 @@ export class AppComponent implements OnInit {
 
       error: (error) => {
         console.log(error);
-      },
-
-      complete: () => {
-
-        if(this.customer){
-          this._customerAccounts(this.customer?.id)
-      }
-
       }
 
     })
@@ -154,29 +145,6 @@ export class AppComponent implements OnInit {
     
   }
 
-
-
-  private _customerAccounts(customerId: number):void{
-
-    this._accountService.customerAccounts(customerId).subscribe({
-      next: (response) => {
-        this.customerAccounts = response;
-      },
-
-      error: (error) => {
-        console.log(error);
-      },
-      complete: () => {
-
-        if(this.customer){
-          this._getCustomerInfo()
-      }
-
-
-      }
-
-    })
-  }
 
 
 
