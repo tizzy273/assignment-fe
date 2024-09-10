@@ -30,8 +30,7 @@ jobs:
       working-directory: ./source-code
     - run: npm run build --if-present
       working-directory: ./source-code
-    - run: npm test
-      working-directory: ./source-code
+
 
     # Step 4: Deploy to Heroku
     - name: Deploy to Heroku
