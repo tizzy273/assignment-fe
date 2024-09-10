@@ -6,7 +6,7 @@ app.use(express.static(__dirname + 'dist/source-code/browser'));
 
 
 app.get('/*', (req, resp)=>{
-    resp.sendFile(__dirname + 'dist/source-code/browser')
+    resp.sendFile(__dirname + 'dist/source-code/browser/index.html')
 });
 
 
