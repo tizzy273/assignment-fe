@@ -24,7 +24,7 @@ jobs:
     - name: Set up Node
       uses: actions/setup-node@v4
       with:
-        node-versione: '10.x'
+        node-version: '10.x'
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
