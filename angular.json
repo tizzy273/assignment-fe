@@ -39,7 +39,7 @@
             ]
           },
           "configurations": {
-            "production": {
+            "default": {
               "budgets": [
                 {
                   "type": "initial",
@@ -61,12 +61,12 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
+                  "with": "src/environments/environment.dev.ts"
                 }
               ]
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "default"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -77,9 +77,8 @@
             "development": {
               "buildTarget": "source-code:build:development"
             }
-          },
-          "defaultConfiguration": "development"
-        },
+          }
+                },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"
         },
