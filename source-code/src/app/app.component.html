@@ -17,7 +17,7 @@
       <div class="d-flex flex-row align-items-center gap-2">
         <!-- Icon -->
         <i class="bi bi-person-circle fs-4"></i>
-        <!-- Username -->
+        <!-- Customer name -->
         <p class="mb-0">{{customer?.name + " " + customer?.surname}}</p>
       </div>
     </div>
@@ -33,6 +33,7 @@
 }
 
 <!-- Container -->
+ 
 <div class="container col-xxl-8 px-4 py-5">
   <!-- Row -->
   <div class="row flex-lg-row-reverse g-5 py-5">
@@ -75,11 +76,13 @@
             <!-- Amount -->
             <div class="d-flex flex-row align-items-center ms-auto px-2">
               @if (transaction.type === 'DEPOSIT') {
-              <i class="bi bi-plus text-success fs-4"></i>
+              <i class="bi fs-4 s bi-plus text-success"></i>
               }@else {
-              <i class="bi bi-dash text-danger fs-4"></i>
+              <i class="bi fs-4 bi-dash text-danger "></i>
               }
+              <i class="bi text-{{transaction.type === 'DEPOSIT' ? 'success' : 'danger'}}" >
               {{ transaction.amount | currency : "EUR" : "symbol" }}
+            </i>
             </div>
           </div>
           }
@@ -116,6 +119,11 @@
         </div>
       </div>
       <div class="d-flex flex-row gap-2">
+        <div class="flex-shrink-0">
+          <button type="button" class="btn btn-outline-{{transactionRequest.type === 'DEPOSIT' ? 'success' : 'danger'}}" (click)="createTransaction()">
+            New Transaction
+          </button>
+        </div>
         <!-- Input group -->
         <div class="input-group mb-3">
           <span class="input-group-text">Account</span>
@@ -141,32 +149,36 @@
             <option value="WITHDRAWAL">WITHDRAWAL</option>
           </select>
         </div>
-        <div class="flex-shrink-0">
-          <button type="button" class="btn btn-outline-{{transactionRequest.type === 'DEPOSIT' ? 'success' : 'warning'}}" (click)="createTransaction()">
-            New Transaction
-          </button>
-        </div>
       </div>
         <div
           class="d-flex flex-column px-2 gap-2 mt-2"
           style="max-height: 60vh; overflow-y: auto"
         >
-        @if(userAccounts.length > 0)
+        @if(customerAccounts.length > 0)
         {
           <h5 class="border-bottom pb-2 mb-4 lh-1">Your accounts</h5>
-          @for (userAccount of userAccounts; track $index) {
+          <div class="d-flex flex-wrap gap-2"> 
+          @for (customerAccount of customerAccounts; track $index) {
           <!-- Row -->
-          <div class="d-flex flex-row align-items-center gap-2">
-            <i class="bi bi-piggy-bank-fill fs-4" style="color: rgb(233, 182, 190);"></i>
+          <div class="d-flex flex-row align-items-center gap-2"  style="flex-basis: calc(33.3% - 10px)">
             <p class="mb-0">
-              {{userAccount.id}}
+              {{customerAccount.id}}
             </p>
+            <i class="bi bi-piggy-bank-fill fs-1" style="color: rgb(233, 182, 190);"></i>
+            <p class="mb-0" [ngClass]="{
+              'text-success': customerAccount.balance > 0 ,
+              'text-danger': customerAccount.balance <= 0,
+            }">
+          {{ customerAccount.balance | currency : 'EUR' : 'symbol' }}
+        </p>
+            <p></p>
           </div>
           }
+        </div>
         }
         @else {
           <h4>
-            No transactions
+            No accounts
           </h4>
         }
         </div>

@@ -12,8 +12,8 @@ export class CustomerService {
   constructor(private _http: HttpClient) { }
 
 
-  public userInfo(customerId: number): Observable<Customer>{
-    const uri = environment.BASEURL + "user-info";
+  public customerInfo(customerId: number): Observable<Customer>{
+    const uri = environment.BASEURL + "customer-info";
   
 
     return this._http.get<Customer>(uri, {

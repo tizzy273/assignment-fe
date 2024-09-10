@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   public customer?: Customer
   public initialCredit: number = 0
   public validatonErrorMessage?: string | null
-  public userAccounts: Account[] = []
+  public customerAccounts: Account[] = []
   public transactionRequest: Transaction ={
     accountId: 0,
     amount:0,
@@ -45,11 +45,11 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this._getUserInfo();
+    this._getCustomerInfo();
   }
 
-  private _getUserInfo():void{
-    this._customerService.userInfo(1).subscribe({
+  private _getCustomerInfo():void{
+    this._customerService.customerInfo(1).subscribe({
       next: (response) => {
         this.customer = response;
       },
@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
       complete: () => {
 
         if(this.customer){
-          this._userAccounts(this.customer?.id)
+          this._customerAccounts(this.customer?.id)
       }
 
       }
@@ -89,7 +89,16 @@ export class AppComponent implements OnInit {
 
       
           this._showError( error.error.message);
+      },
+      complete: () => {
+
+        if(this.customer){
+          this._getCustomerInfo()
       }
+
+
+      }
+
 
 
     }
@@ -129,6 +138,14 @@ export class AppComponent implements OnInit {
           console.log(error);
       
           this._showError( error.error.message);
+      },
+      complete: () => {
+
+        if(this.customer){
+          this._getCustomerInfo()
+      }
+
+
       }
 
 
@@ -139,15 +156,23 @@ export class AppComponent implements OnInit {
 
 
 
-  private _userAccounts(userId: number):void{
+  private _customerAccounts(customerId: number):void{
 
-    this._accountService.userAccounts(userId).subscribe({
+    this._accountService.customerAccounts(customerId).subscribe({
       next: (response) => {
-        this.userAccounts = response;
+        this.customerAccounts = response;
       },
 
       error: (error) => {
         console.log(error);
+      },
+      complete: () => {
+
+        if(this.customer){
+          this._getCustomerInfo()
+      }
+
+
       }
 
     })

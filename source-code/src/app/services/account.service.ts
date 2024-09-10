@@ -20,8 +20,8 @@ export class AccountService {
   }
 
 
-  public userAccounts(customerId: number): Observable<Account[]>{
-    const uri = environment.BASEURL + "user-accounts";
+  public customerAccounts(customerId: number): Observable<Account[]>{
+    const uri = environment.BASEURL + "customer-accounts";
 
     return this._http.get<Account[]>(uri, {
       params: new HttpParams().set("customer-id", customerId)
