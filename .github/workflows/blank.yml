@@ -27,7 +27,7 @@ jobs:
         node-version: '20.x'
     
     - run: npm ci
-    - run: npm run build -- --configuration production
+    - run: npm run build -- --configuration development
 
     # Step 4: Deploy to Heroku
     - name: Deploy to Heroku
