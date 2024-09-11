@@ -154,7 +154,7 @@
           class="d-flex flex-column px-2 gap-2 mt-2"
           style="max-height: 60vh; overflow-y: auto"
         >
-        @if(!!customer && customer.accounts.length > 0)
+        @if(!!customer && !!customer.accounts && customer.accounts.length >0)
         {
           <h5 class="border-bottom pb-2 mb-4 lh-1">Your accounts</h5>
           <div class="d-flex flex-wrap gap-2"> 
