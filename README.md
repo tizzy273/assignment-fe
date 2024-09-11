@@ -13,4 +13,4 @@ In your locale environment run `ng build --configuration default` to build the p
 After building the project, start the server with: `npm start`
 
 ## Access the application
-Open your browser and navigate to http://localhost:4200/ to view the application.
+Open your browser and navigate to http://localhost:4200/ to view the application. In order to make the frontend work, you will need to start the 3 backend microservices
